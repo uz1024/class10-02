@@ -607,7 +607,7 @@
             };
           },
 
-          // -------------------- УРОВЕНЬ 3: ПРИМЕНЕНИЕ (стр. 24–25) --------------------
+// -------------------- УРОВЕНЬ 3: ПРИМЕНЕНИЕ (стр. 24–25) --------------------
           function () {
             const cases = [
               { freqGhz: 3, cores: 4, blockTask: "выполняет арифметические вычисления и логические операции", blockCode: "ALU" },
@@ -616,7 +616,8 @@
               { freqGhz: 5, cores: 4, blockTask: "выполняет арифметические вычисления и логические операции", blockCode: "ALU" }
             ];
             const c = pickOne(cases);
-            const expected = c.freqGhz + "-1000-" + c.blockCode;
+            const totalBillions = c.freqGhz * c.cores;
+            const expected = totalBillions + "-1000-" + c.blockCode;
 
             const cardHtml =
               '<div class="my-3 p-4 rounded-2xl bg-slate-900 text-slate-100 border border-slate-700 shadow-inner">' +
@@ -626,8 +627,8 @@
                 '</div>' +
                 '<div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">' +
                   '<div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">' +
-                    '<div class="text-blue-400 font-bold mb-1">Сегмент [1] • Частота ЦП</div>' +
-                    '<div>Тактовая частота: <b>' + c.freqGhz + ' ГГц</b> (' + c.cores + ' ядра). Укажите, сколько <b>миллиардов</b> инструкций в секунду обрабатывает процессор при этой частоте (стр. 24).</div>' +
+                    '<div class="text-blue-400 font-bold mb-1">Сегмент [1] • Мощность ядер ЦП</div>' +
+                    '<div>ЦП имеет <b>' + c.cores + ' ядра</b> с частотой <b>' + c.freqGhz + ' ГГц</b> каждое. До скольких <b>миллиардов</b> инструкций в секунду суммарно обрабатывают все ядра этого ЦП (стр. 24)?</div>' +
                   '</div>' +
                   '<div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">' +
                     '<div class="text-emerald-400 font-bold mb-1">Сегмент [2] • Виртуальная память</div>' +
@@ -644,10 +645,10 @@
               type: "input",
               badge: "Уровень 3 • Применение (§ 2.01, стр. 24–25)",
               prompt: "Сформируйте диагностический код системы из 3 сегментов через дефис по данным техпаспорта:" + cardHtml,
-              helperAlphabet: "Формат ввода через дефис: [Число 1]-[Число 2]-[Аббревиатура]. Пример формата: 9-500-ROM",
-              placeholder: "Например: 9-500-ROM",
+              helperAlphabet: "Формат ввода через дефис: [Число 1]-[Число 2]-[Аббревиатура]. Пример формата: 12-500-ROM",
+              placeholder: "Например: 12-500-ROM",
               expectedAnswer: expected,
-              hintRef: "Стр. 24–25: 1) При частоте N ГГц процессор обрабатывает до N миллиардов инструкций в секунду; 2) На стр. 25 указано «в тысячу (1000) раз медленнее»; 3) ALU считает, CU управляет циклом вызова-выполнения."
+              hintRef: "Стр. 24–25: 1) Каждое ядро — отдельный процессор: при частоте " + c.freqGhz + " ГГц одно ядро обрабатывает до " + c.freqGhz + " млрд инструкций/с, а " + c.cores + " ядра суммарно — до " + totalBillions + " млрд (" + c.freqGhz + " × " + c.cores + "); 2) На стр. 25 указано «в тысячу (1000) раз медленнее»; 3) ALU считает, CU управляет циклом."
             };
           }
         ]
